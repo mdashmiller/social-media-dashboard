@@ -16,25 +16,21 @@ describe('App basic rendering', () => {
 
   describe('App conditional rendering', () => {
 
-  })
+    it('chages the view when the button is clicked', () => {
+      const { container } = render(<App />)
+      const inbox = getByTestId(container, 'inbox')
+      const button = getByTestId(container, 'button')
 
-})
+      expect(inbox).toBeInTheDocument()
 
-describe('setView', () => {
+      fireEvent.click(button)
 
-  it('the view is changed when the button is clicked', () => {
-    const { container } = render(<App />)
-    const inbox = getByTestId(container, 'inbox')
-    const button = getByTestId(container, 'button')
+      const weather = getByTestId(container, 'weather')
 
-    expect(inbox).toBeInTheDocument()
-
-    fireEvent.click(button)
-
-    const weather = getByTestId(container, 'weather')
-
-    expect(weather).toBeInTheDocument()
-    expect(inbox).not.toBeInTheDocument()
+      expect(weather).toBeInTheDocument()
+      expect(inbox).not.toBeInTheDocument()
+    })
+    
   })
 
 })
