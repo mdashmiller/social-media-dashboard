@@ -89,7 +89,7 @@ describe('changeView function', () => {
 
 describe('receiving props', () => {
 
-  it('recieves the correct props', () => {
+  it('recieves props correctly', () => {
     let result = checkProps(Nav, {changeView: () => {}})
     expect(result === undefined)
   })

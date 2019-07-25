@@ -1,72 +1,72 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { render, getByTestId, getByText, fireEvent } from '@testing-library/react'
+import { render, getByTestId } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
 import App from './App'
+
+import { checkProps } from '../Utils'
 
 describe('App basic rendering', () => {
 
   it('renders 1 main div', () => {
     const { container } = render(<App />)
     const main = getByTestId(container, 'main')
-    expect(main).toBeInTheDocument()
-  })
 
-  it('renders 1 Nav component', () => {
-    const { container } = render(<App />)
-    const nav = getByTestId(container, 'nav')
-    expect(nav).toBeInTheDocument()
+    expect(main).toBeInTheDocument()
   })
 
 })
 
-describe('App conditional rendering', () => {
+describe('App rendering based on props', () => {
 
-  it('renders the correct view based on user input', () => {
+  function resizeWindow(width) {
+    window.innerWidth = width
+    window.dispatchEvent(new Event('resize'))
+  }
+  
+  function createTestableComponent(width, viewName) {
     const { container } = render(<App />)
+    resizeWindow(width)
+    return getByTestId(container, viewName)
+  }
 
-    // create testable navigation buttons
-    const inboxButton = getByTestId(container, 'inbox-button')
-    const notificationsButton = getByTestId(container, 'notifications-button')
-    const newsButton = getByTestId(container, 'news-button')
-    const weatherButton = getByTestId(container, 'weather-button')
-    const editProfileButton = getByTestId(container, 'editProfile-button')
+  const mobile = createTestableComponent(479, 'mobile')
+  const tablet = createTestableComponent(728, 'tablet')
+  const desktop = createTestableComponent(1024, 'desktop')
+  
+  it('renders the mobile view correctly', () => {
+    resizeWindow(479)
+    
+    expect(mobile).toBeInTheDocument()
+    expect(tablet.location).toBe(undefined)
+    expect(desktop.location).toBe(undefined)
+  })
 
-    // default view
-    let inbox = getByTestId(container, 'inbox')
-    expect(inbox).toBeInTheDocument()
+  it('renders the tablet view correctly', () => {
+    resizeWindow(728)
+    
+    expect(tablet).toBeInTheDocument()
+    expect(mobile.location).toBe(undefined)
+    expect(desktop.location).toBe(undefined)
+  })
 
-    // notifications view
-    fireEvent.click(notificationsButton)
-    let notifications = getByTestId(container, 'notifications')
-    expect(notifications).toBeInTheDocument()
-    expect(inbox).not.toBeInTheDocument()
+  it('renders the desktop view correctly', () => {
+    resizeWindow(1024)
+    
+    expect(desktop).toBeInTheDocument()
+    expect(mobile.location).toBe(undefined)
+    expect(tablet.location).toBe(undefined)
+  })
 
-    // news view
-    fireEvent.click(newsButton)
-    let news = getByTestId(container, 'news')
-    expect(news).toBeInTheDocument()
-    expect(notifications).not.toBeInTheDocument()
+})
 
-    // weather view
-    fireEvent.click(weatherButton)
-    let weather = getByTestId(container, 'weather')
-    expect(weather).toBeInTheDocument()
-    expect(news).not.toBeInTheDocument()
+describe('receiving props', () => {
 
-    // edit profile view
-    fireEvent.click(editProfileButton)
-    let editProfile = getByTestId(container, 'edit-profile')
-    expect(editProfile).toBeInTheDocument()
-    expect(weather).not.toBeInTheDocument()
-
-    // inbox view
-    fireEvent.click(inboxButton)
-    inbox = getByTestId(container, 'inbox')
-    expect(inbox).toBeInTheDocument()
-    expect(editProfile).not.toBeInTheDocument()
+  it('recieves props correctly', () => {
+    let result = checkProps(App, { isMobile: true, isTablet: false, isDesktop: false })
+    expect(result === undefined)
   })
 
 })

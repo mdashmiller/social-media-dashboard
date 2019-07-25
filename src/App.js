@@ -1,44 +1,32 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import Nav from './components/Nav'
-import Inbox from './components/Inbox'
-import Notifications from './components/Notifications'
-import News from './components/News'
-import Weather from './components/Weather'
-import EditProfile from './components/EditProfile'
+import Mobile from './components/Mobile'
+import Tablet from './components/Tablet'
+import Desktop from './components/Desktop'
 
-function App() {
-  const [view, setView] = useState('inbox')
+import withSizes from 'react-sizes'
+import PropTypes from 'prop-types'
 
-  function changeView(viewOption) {
-    switch(viewOption) {
-      case 'notifications':
-        setView('notifications')
-        break
-      case 'news':
-        setView('news')
-        break
-      case 'weather':
-        setView('weather')
-        break
-      case 'edit profile':
-        setView('edit profile')
-        break
-      default:
-        setView('inbox')
-    }
-  }
-
+function App({ isMobile, isTablet, isDesktop }) {
   return (
-    <div data-testid="main" className="App">
-      <Nav changeView={changeView} />
-      {view === 'inbox' && <Inbox />}
-      {view === 'notifications' && <Notifications />}
-      {view === 'news' && <News />}
-      {view === 'weather' && <Weather />}
-      {view === 'edit profile' && <EditProfile />}
+    <div data-testid="main">
+      {isMobile && <Mobile />}
+      {isTablet && <Tablet />}
+      {isDesktop && <Desktop />}
     </div>
   )
 }
 
-export default App
+const mapSizesToProps = sizes => ({
+  isMobile: withSizes.isMobile(sizes),
+  isTablet: withSizes.isTablet(sizes),
+  isDesktop: withSizes.isDesktop(sizes)
+})
+
+App.propTypes = {
+  isMobile: PropTypes.bool.isRequired,
+  isTablet: PropTypes.bool.isRequired,
+  isDesktop: PropTypes.bool.isRequired
+}
+
+export default withSizes(mapSizesToProps)(App)
