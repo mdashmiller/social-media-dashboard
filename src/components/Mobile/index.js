@@ -7,31 +7,14 @@ import News from '../News'
 import Weather from '../Weather'
 import EditProfile from '../EditProfile'
 
+import { handleChangeView } from '../../functions'
+
 const Mobile = () => {
   const [view, setView] = useState('inbox')
 
-  function changeView(viewOption) {
-    switch (viewOption) {
-      case 'notifications':
-        setView('notifications')
-        break
-      case 'news':
-        setView('news')
-        break
-      case 'weather':
-        setView('weather')
-        break
-      case 'edit profile':
-        setView('edit profile')
-        break
-      default:
-        setView('inbox')
-    }
-  }
-
   return (
     <div data-testid="mobile">
-      <Nav changeView={changeView} />
+      <Nav handleChangeView={handleChangeView} setView={setView} screen={'mobile'} />
       {view === 'inbox' && <Inbox />}
       {view === 'notifications' && <Notifications />}
       {view === 'news' && <News />}
