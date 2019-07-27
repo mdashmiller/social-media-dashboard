@@ -7,9 +7,11 @@ import { checkProps } from '../../../Utils'
 
 import Nav from './index'
 
+import * as myFunctions from '../../functions'
+
 describe('Nav basic rendering', () => {
 
-  const { container } = render(<Nav handleChangeView={() => {}} setView={() => {}} screen={'any'} />) 
+  const { container } = render(<Nav view={'any'} setView={() => {}} screen={'any'} />) 
 
   it('renders one nav div', () => {
     const nav = getByTestId(container, 'nav')
@@ -27,11 +29,11 @@ describe('Nav conditional rendering', () => {
 
   describe('rendering for mobile screens', () => {
 
-    const { container } = render(<Nav handleChangeView={() => {}} setView={() => {}}  screen={'mobile'} />)
+    const { container } = render(<Nav view={'any'} setView={() => {}}  screen={'mobile'} />)
 
-    it('renders 5 list items', () => {
+    it('renders 6 list items', () => {
       const navList = getByTestId(container, 'nav-list')
-      expect(navList.children.length).toBe(5)
+      expect(navList.children.length).toBe(6)
     })
 
     it('renders 1 inbox button', () => {
@@ -42,6 +44,11 @@ describe('Nav conditional rendering', () => {
     it('renders 1 notifications button', () => {
       const notificationsButton = getByTestId(container, 'notifications-button')
       expect(notificationsButton).toBeInTheDocument()
+    })
+
+    it('renders 1 compose button', () => {
+      const composeButton = getByTestId(container, 'compose-button')
+      expect(composeButton).toBeInTheDocument()
     })
 
     it('renders 1 weather button', () => {
@@ -63,16 +70,21 @@ describe('Nav conditional rendering', () => {
 
   describe('rendering for tablet screens', () => {
 
-    const { container } = render(<Nav handleChangeView={() => {}} setView={() => {}}  screen={'tablet'} />)
+    const { container } = render(<Nav view={'any'} setView={() => {}}  screen={'tablet'} />)
 
-    it('renders 4 list items', () => {
+    it('renders 5 list items', () => {
       const navList = getByTestId(container, 'nav-list')
-      expect(navList.children.length).toBe(4)
+      expect(navList.children.length).toBe(5)
     })
 
     it('renders 1 notifications button', () => {
       const notificationsButton = getByTestId(container, 'notifications-button')
       expect(notificationsButton).toBeInTheDocument()
+    })
+
+    it('renders 1 compose button', () => {
+      const composeButton = getByTestId(container, 'compose-button')
+      expect(composeButton).toBeInTheDocument()
     })
 
     it('renders 1 weather button', () => {
@@ -94,16 +106,21 @@ describe('Nav conditional rendering', () => {
 
   describe('rendering for desktop screens', () => {
 
-    const { container } = render(<Nav handleChangeView={() => {}} setView={() => {}}  screen={'desktop'} />)
+    const { container } = render(<Nav view={'any'} setView={() => {}}  screen={'desktop'} />)
 
-    it('renders 2 list items', () => {
+    it('renders 3 list items', () => {
       const navList = getByTestId(container, 'nav-list')
-      expect(navList.children.length).toBe(2)
+      expect(navList.children.length).toBe(3)
     })
 
     it('renders 1 notifications button', () => {
       const notificationsButton = getByTestId(container, 'notifications-button')
       expect(notificationsButton).toBeInTheDocument()
+    })
+
+    it('renders 1 compose button', () => {
+      const composeButton = getByTestId(container, 'compose-button')
+      expect(composeButton).toBeInTheDocument()
     })
 
     it('renders 1 edit profile button', () => {
@@ -115,18 +132,19 @@ describe('Nav conditional rendering', () => {
 
 })
 
-describe('handleChangeView function', () => {
+describe('calling the handleNavClick function', () => {
 
-  const handleChangeView = jest.fn()
-  const setView = () => {}
-  const { container } = render(<Nav handleChangeView={handleChangeView} setView={setView} screen={'mobile'} />)
+  const mockHandleNavClick = jest.spyOn(myFunctions, 'handleNavClick')
+  const mockSetView = () => {}
+  const { container } = render(<Nav view={'any'} setView={mockSetView} screen={'mobile'} />)
+
   const tests = (field) => {
-    expect(handleChangeView).toHaveBeenCalledTimes(1)
-    expect(handleChangeView).toHaveBeenCalledWith(field, setView)
-    handleChangeView.mockClear()
+    expect(mockHandleNavClick).toHaveBeenCalledTimes(1)
+    expect(mockHandleNavClick).toHaveBeenCalledWith('mobile', 'any', field, mockSetView)
+    mockHandleNavClick.mockClear()
   }
 
-  it('is called with the correct value', () => {
+  it('is called with the correct values', () => {
     const inboxButton = getByTestId(container, 'inbox-button')
     fireEvent.click(inboxButton)
     tests('inbox')
@@ -134,6 +152,10 @@ describe('handleChangeView function', () => {
     const notificationsButton = getByTestId(container, 'notifications-button')
     fireEvent.click(notificationsButton)
     tests('notifications')
+
+    const composeButton = getByTestId(container, 'compose-button')
+    fireEvent.click(composeButton)
+    tests('compose')
 
     const weatherButton = getByTestId(container, 'weather-button')
     fireEvent.click(weatherButton)
@@ -153,7 +175,7 @@ describe('handleChangeView function', () => {
 describe('receiving props', () => {
 
   it('recieves props correctly', () => {
-    let result = checkProps(Nav, { handleChangeView: () => {}, setView: () => {}, screen: 'any'})
+    let result = checkProps(Nav, { view: 'any', setView: () => {}, screen: 'any'})
     expect(result === undefined)
   })
 
@@ -163,7 +185,7 @@ describe('Nav mounting and ummounting', () => {
 
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<Nav handleChangeView={() => {}} setView={() => {}} screen={'any'} />, div);
+    ReactDOM.render(<Nav view={'any'} setView={() => {}} screen={'any'} />, div);
     ReactDOM.unmountComponentAtNode(div);
   })
 

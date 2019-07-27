@@ -35,6 +35,7 @@ describe('Tablet conditional rendering', () => {
 
     // create testable navigation buttons
     const notificationsButton = getByTestId(container, 'notifications-button')
+    const composeButton = getByTestId(container, 'compose-button')
     const newsButton = getByTestId(container, 'news-button')
     const weatherButton = getByTestId(container, 'weather-button')
     const editProfileButton = getByTestId(container, 'editProfile-button')
@@ -49,12 +50,19 @@ describe('Tablet conditional rendering', () => {
     expect(notifications).toBeInTheDocument()
     expect(inbox).toBeInTheDocument()
 
+    // compose view
+    fireEvent.click(composeButton)
+    const compose = getByTestId(container, 'compose')
+    expect(compose).toBeInTheDocument()
+    expect(inbox).toBeInTheDocument()
+    expect(notifications).not.toBeInTheDocument()
+
     // news view
     fireEvent.click(newsButton)
     const news = getByTestId(container, 'news')
     expect(news).toBeInTheDocument()
     expect(inbox).toBeInTheDocument()
-    expect(notifications).not.toBeInTheDocument()
+    expect(compose).not.toBeInTheDocument()
 
     // weather view
     fireEvent.click(weatherButton)

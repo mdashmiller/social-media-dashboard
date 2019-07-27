@@ -30,6 +30,7 @@ describe('Mobile conditional rendering', () => {
     // create testable navigation buttons
     const inboxButton = getByTestId(container, 'inbox-button')
     const notificationsButton = getByTestId(container, 'notifications-button')
+    const composeButton = getByTestId(container, 'compose-button')
     const newsButton = getByTestId(container, 'news-button')
     const weatherButton = getByTestId(container, 'weather-button')
     const editProfileButton = getByTestId(container, 'editProfile-button')
@@ -44,11 +45,17 @@ describe('Mobile conditional rendering', () => {
     expect(notifications).toBeInTheDocument()
     expect(inbox).not.toBeInTheDocument()
 
+    // compose view
+    fireEvent.click(composeButton)
+    let compose = getByTestId(container, 'compose')
+    expect(compose).toBeInTheDocument()
+    expect(notifications).not.toBeInTheDocument()
+
     // news view
     fireEvent.click(newsButton)
     let news = getByTestId(container, 'news')
     expect(news).toBeInTheDocument()
-    expect(notifications).not.toBeInTheDocument()
+    expect(compose).not.toBeInTheDocument()
 
     // weather view
     fireEvent.click(weatherButton)
