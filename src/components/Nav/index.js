@@ -3,57 +3,35 @@ import PropTypes from 'prop-types'
 
 import { handleNavClick } from '../../functions'
 
-const Nav = ({ view, setView, screen }) => {
+const Nav = ({ view, setView, screen, navOptions }) => {
   return (
-    <div data-testid="nav">
+    <nav data-testid="nav">
       <ul data-testid="nav-list">
-        {screen === 'mobile' &&
-          <li>
-          <button data-testid="inbox-button" onClick={() => handleNavClick(screen, view, 'inbox', setView)}>
-            Inbox
+        {navOptions.map(option =>
+          <li key={option.id}>
+            <button
+              data-testid={`${option.action}-button`}
+              type="button"
+              onClick={() => handleNavClick(screen, view, option.label, setView)}
+            >
+              {option.label}
             </button>
           </li>
-        }
-        <li>
-          <button data-testid="compose-button" onClick={() => handleNavClick(screen, view, 'compose', setView)}>
-            New Post
-          </button>
-        </li>
-        <li>
-          <button data-testid="notifications-button" onClick={() => handleNavClick(screen, view, 'notifications', setView)}>
-            Notifications
-          </button>
-        </li>
-        {screen === 'mobile'|| screen === 'tablet' ? (
-          <>
-            <li>
-              <button data-testid="weather-button" onClick={() => handleNavClick(screen, view, 'weather', setView)}>
-                Weather
-            </button>
-            </li>
-            <li>
-              <button data-testid="news-button" onClick={() => handleNavClick(screen, view, 'news', setView)}>
-                News
-            </button>
-            </li>
-          </>
-        ) : (
-          null
         )}
-        <li>
-          <button data-testid="editProfile-button" onClick={() => handleNavClick(screen, view, 'edit profile', setView)}>
-            Edit Profile
-          </button>
-        </li>
       </ul>
-    </div>
+    </nav>
   )
 }
 
 Nav.propTypes = {
   view: PropTypes.string.isRequired,
   setView: PropTypes.func.isRequired,
-  screen: PropTypes.string.isRequired
+  screen: PropTypes.string.isRequired,
+  navOptions: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    action: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired
+  })).isRequired
 }
 
 export default Nav

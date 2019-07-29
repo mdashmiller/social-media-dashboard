@@ -20,6 +20,12 @@ describe('Desktop basic rendering', () => {
     expect(nav).toBeInTheDocument()
   })
 
+  it('renders 1 main-content element', () => {
+    const { container } = render(<Desktop />)
+    const main = getByTestId(container, 'main')
+    expect(main).toBeInTheDocument()
+  })
+
   it('renders 1 Inbox component', () => {
     const { container } = render(<Desktop />)
     const inbox = getByTestId(container, 'inbox')
@@ -46,9 +52,9 @@ describe('Desktop conditional rendering', () => {
     const { container } = render(<Desktop />)
 
     // create testable navigation buttons
-    const notificationsButton = getByTestId(container, 'notifications-button')
+    const notificationsButton = getByTestId(container, 'view-notifications-button')
     const composeButton = getByTestId(container, 'compose-button')
-    const editProfileButton = getByTestId(container, 'editProfile-button')
+    const editProfileButton = getByTestId(container, 'edit-profile-button')
 
     // default view
     const inbox = getByTestId(container, 'inbox')

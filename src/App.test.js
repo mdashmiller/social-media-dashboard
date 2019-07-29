@@ -10,11 +10,11 @@ import { checkProps } from '../Utils'
 
 describe('App basic rendering', () => {
 
-  it('renders 1 main div', () => {
+  it('renders 1 app div', () => {
     const { container } = render(<App />)
-    const main = getByTestId(container, 'main')
+    const app = getByTestId(container, 'app')
 
-    expect(main).toBeInTheDocument()
+    expect(app).toBeInTheDocument()
   })
 
 })

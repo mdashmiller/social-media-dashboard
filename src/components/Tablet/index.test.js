@@ -20,6 +20,12 @@ describe('Tablet basic rendering', () => {
     expect(nav).toBeInTheDocument()
   })
 
+  it('renders 1 main-content element', () => {
+    const { container } = render(<Tablet />)
+    const main = getByTestId(container, 'main')
+    expect(main).toBeInTheDocument()
+  })
+
   it('renders 1 Inbox component', () => {
     const { container } = render(<Tablet />)
     const inbox = getByTestId(container, 'inbox')
@@ -34,11 +40,11 @@ describe('Tablet conditional rendering', () => {
     const { container } = render(<Tablet />)
 
     // create testable navigation buttons
-    const notificationsButton = getByTestId(container, 'notifications-button')
+    const notificationsButton = getByTestId(container, 'view-notifications-button')
     const composeButton = getByTestId(container, 'compose-button')
-    const newsButton = getByTestId(container, 'news-button')
-    const weatherButton = getByTestId(container, 'weather-button')
-    const editProfileButton = getByTestId(container, 'editProfile-button')
+    const newsButton = getByTestId(container, 'view-news-button')
+    const weatherButton = getByTestId(container, 'view-weather-button')
+    const editProfileButton = getByTestId(container, 'edit-profile-button')
 
     // default view
     const inbox = getByTestId(container, 'inbox')

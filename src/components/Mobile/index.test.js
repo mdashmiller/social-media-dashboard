@@ -20,6 +20,12 @@ describe('Mobile basic rendering', () => {
     expect(nav).toBeInTheDocument()
   })
 
+  it('renders 1 main-content element', () => {
+    const { container } = render(<Mobile />)
+    const main = getByTestId(container, 'main')
+    expect(main).toBeInTheDocument()
+  })
+
 })
 
 describe('Mobile conditional rendering', () => {
@@ -28,12 +34,12 @@ describe('Mobile conditional rendering', () => {
     const { container } = render(<Mobile />)
 
     // create testable navigation buttons
-    const inboxButton = getByTestId(container, 'inbox-button')
-    const notificationsButton = getByTestId(container, 'notifications-button')
+    const inboxButton = getByTestId(container, 'view-inbox-button')
+    const notificationsButton = getByTestId(container, 'view-notifications-button')
     const composeButton = getByTestId(container, 'compose-button')
-    const newsButton = getByTestId(container, 'news-button')
-    const weatherButton = getByTestId(container, 'weather-button')
-    const editProfileButton = getByTestId(container, 'editProfile-button')
+    const newsButton = getByTestId(container, 'view-news-button')
+    const weatherButton = getByTestId(container, 'view-weather-button')
+    const editProfileButton = getByTestId(container, 'edit-profile-button')
 
     // default view
     let inbox = getByTestId(container, 'inbox')
