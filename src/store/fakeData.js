@@ -30,3 +30,52 @@ export const posts = [
     time: Date.now()
   }
 ]
+
+export const headlines = [
+  {
+    uid: uuidv4(),
+    title: 'Strange Lightening Over Hill Valley',
+  },
+  {
+    uid: uuidv4(),
+    title: 'Tannen Opens New Casino',
+  },
+  {
+    uid: uuidv4(),
+    title: 'Doc Brown\'s New Capacitor',
+  },
+  {
+    uid: uuidv4(),
+    title: 'Updates From Enchantment Under The Sea',
+  }
+]
+
+export const notifications = [
+  {
+    uid: uuidv4(),
+    content: 'biff just posted a message',
+    time: Date.now()
+  },
+  {
+    uid: uuidv4(),
+    content: 'marty just posted a message',
+    time: Date.now()
+  },
+  {
+    uid: uuidv4(),
+    content: 'jennifer just joined JUMP!',
+    time: Date.now()
+  },
+  {
+    uid: uuidv4(),
+    content: 'einstein just posted a message',
+    time: Date.now()
+  },
+]
+
+export const weather = {
+  location: 'Hill Valley',
+  icon: 'icon goes here',
+  temperature: '72',
+  description: 'sunny'
+}
