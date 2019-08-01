@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 
 import { render, getByText, getByTestId, queryAllByTestId } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
+import { checkProps } from '../../../Utils'
 
 import Inbox from './index'
 
@@ -42,6 +43,30 @@ describe('Inbox basic rendering', () => {
   // it('renders the Loading component when there are no posts', () => {
 
   // })
+
+})
+
+describe('receiving props', () => {
+
+  it('recieves props correctly', () => {
+    let result = checkProps(
+      Inbox,
+      {
+        posts: [
+          {
+            uid: 1,
+            author: 'test author',
+            title: 'test title',
+            content: 'test content',
+            time: 1
+          }
+        ],
+        getPosts: () => {}
+      }
+    )
+
+    expect(result === undefined)
+  })
 
 })
 

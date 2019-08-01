@@ -222,7 +222,8 @@ describe('receiving props', () => {
           { id: 5, action: 'view-weather', label: 'weather' },
           { id: 6, action: 'edit-profile', label: 'edit profile' }
         ]
-      })
+      }
+    )
 
     expect(result === undefined)
   })

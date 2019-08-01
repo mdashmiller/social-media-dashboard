@@ -8,6 +8,7 @@ import withSizes from 'react-sizes'
 import PropTypes from 'prop-types'
 
 function App({ isMobile, isTablet, isDesktop }) {
+
   return (
     <div data-testid="app">
       {isMobile && <Mobile />}
