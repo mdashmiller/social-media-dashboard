@@ -1,33 +1,45 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 
-import { render, getByTestId, fireEvent } from '@testing-library/react'
+import { getByTestId, fireEvent, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
 import Tablet from './index'
 
+import { setUp, renderAndUnmount } from '../../../Utils'
+
+describe('Tablet mounting and ummounting', () => {
+
+  it('renders without crashing', () => {
+    renderAndUnmount(<Tablet />)
+  })
+
+})
+
 describe('Tablet basic rendering', () => {
 
+  let container
+  beforeEach(() => {
+    container = setUp(<Tablet />)
+  })
+
+  afterEach(cleanup)
+
   it('renders 1 tablet div', () => {
-    const { container } = render(<Tablet />)
     const tablet = getByTestId(container, 'tablet')
     expect(tablet).toBeInTheDocument()
   })
 
   it('renders 1 Nav component', () => {
-    const { container } = render(<Tablet />)
     const nav = getByTestId(container, 'nav')
     expect(nav).toBeInTheDocument()
   })
 
   it('renders 1 main-content element', () => {
-    const { container } = render(<Tablet />)
     const main = getByTestId(container, 'main')
     expect(main).toBeInTheDocument()
   })
 
   it('renders 1 Inbox component', () => {
-    const { container } = render(<Tablet />)
     const inbox = getByTestId(container, 'inbox')
     expect(inbox).toBeInTheDocument()
   })
@@ -36,9 +48,14 @@ describe('Tablet basic rendering', () => {
 
 describe('Tablet conditional rendering', () => {
 
-  it('renders the correct view based on user input', () => {
-    const { container } = render(<Tablet />)
+  let container
+  beforeEach(() => {
+    container = setUp(<Tablet />)
+  })
 
+  afterEach(cleanup)
+
+  it('renders the correct view based on user input', () => {
     // create testable navigation buttons
     const notificationsButton = getByTestId(container, 'view-notifications-button')
     const composeButton = getByTestId(container, 'compose-button')
@@ -83,16 +100,6 @@ describe('Tablet conditional rendering', () => {
     expect(editProfile).toBeInTheDocument()
     expect(inbox).toBeInTheDocument()
     expect(weather).not.toBeInTheDocument()
-  })
-
-})
-
-describe('Tablet mounting and ummounting', () => {
-
-  it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<Tablet />, div);
-    ReactDOM.unmountComponentAtNode(div);
   })
 
 })

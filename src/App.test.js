@@ -1,20 +1,31 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 
-import { render, getByTestId } from '@testing-library/react'
+import { getByTestId, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
 import App from './App'
 
-import { checkProps } from '../Utils'
+import { setUp, checkProps, renderAndUnmount } from '../Utils'
+
+describe('App mounting and ummounting', () => {
+
+  it('renders without crashing', () => {
+    renderAndUnmount(<App />)
+  })
+
+})
 
 describe('App basic rendering', () => {
 
-  it('renders 1 app div', () => {
-    const { container } = render(<App />)
-    const app = getByTestId(container, 'app')
+  let container
+  beforeEach(() => {
+    container = setUp(<App />)
+  })
 
+  it('renders 1 app div', () => {
+    const app = getByTestId(container, 'app')
     expect(app).toBeInTheDocument()
+    cleanup
   })
 
 })
@@ -27,7 +38,7 @@ describe('App rendering based on props', () => {
   }
   
   function createTestableComponent(width, viewName) {
-    const { container } = render(<App />)
+    const container = setUp(<App />)
     resizeWindow(width)
     return getByTestId(container, viewName)
   }
@@ -67,16 +78,6 @@ describe('receiving props', () => {
   it('recieves props correctly', () => {
     let result = checkProps(App, { isMobile: true, isTablet: false, isDesktop: false })
     expect(result === undefined)
-  })
-
-})
-
-describe('App mounting and ummounting', () => {
-
-  it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<App />, div);
-    ReactDOM.unmountComponentAtNode(div);
   })
 
 })

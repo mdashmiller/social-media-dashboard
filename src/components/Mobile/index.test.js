@@ -1,27 +1,40 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 
-import { render, getByTestId, fireEvent } from '@testing-library/react'
+import { getByTestId, fireEvent, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
 import Mobile from './index'
 
+import { setUp, renderAndUnmount } from '../../../Utils'
+
+describe('Mobile mounting and ummounting', () => {
+
+  it('renders without crashing', () => {
+    renderAndUnmount(<Mobile />)
+  })
+
+})
+
 describe('Mobile basic rendering', () => {
 
+  let container
+  beforeEach(() => {
+    container = setUp(<Mobile />)
+  })
+
+  afterEach(cleanup)
+
   it('renders 1 mobile div', () => {
-    const { container } = render(<Mobile />)
     const mobile = getByTestId(container, 'mobile')
     expect(mobile).toBeInTheDocument()
   })
 
   it('renders 1 Nav component', () => {
-    const { container } = render(<Mobile />)
     const nav = getByTestId(container, 'nav')
     expect(nav).toBeInTheDocument()
   })
 
   it('renders 1 main-content element', () => {
-    const { container } = render(<Mobile />)
     const main = getByTestId(container, 'main')
     expect(main).toBeInTheDocument()
   })
@@ -30,9 +43,14 @@ describe('Mobile basic rendering', () => {
 
 describe('Mobile conditional rendering', () => {
 
-  it('renders the correct view based on user input', () => {
-    const { container } = render(<Mobile />)
+  let container
+  beforeEach(() => {
+    container = setUp(<Mobile />)
+  })
 
+  afterEach(cleanup)
+
+  it('renders the correct view based on user input', () => {
     // create testable navigation buttons
     const inboxButton = getByTestId(container, 'view-inbox-button')
     const notificationsButton = getByTestId(container, 'view-notifications-button')
@@ -80,16 +98,6 @@ describe('Mobile conditional rendering', () => {
     inbox = getByTestId(container, 'inbox')
     expect(inbox).toBeInTheDocument()
     expect(editProfile).not.toBeInTheDocument()
-  })
-
-})
-
-describe('Mobile mounting and ummounting', () => {
-
-  it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<Mobile />, div);
-    ReactDOM.unmountComponentAtNode(div);
   })
 
 })
