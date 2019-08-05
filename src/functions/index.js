@@ -14,3 +14,11 @@ export const handleMobileNavClick = (setNavMenuOpen, currentView, clickedView, s
   setNavMenuOpen(false)
   handleNavClick('mobile', currentView, clickedView, setView)
 }
+
+export const handleOutsideNavClick = (event, node, setNavMenuOpen) => {
+  if (node.current.contains(event.target)) {
+    return
+  } else {
+    setNavMenuOpen(false)
+  }
+}

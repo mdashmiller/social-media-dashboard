@@ -1,13 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-import { handleMobileNavClick } from '../../../functions'
+import { handleMobileNavClick, handleOutsideNavClick } from '../../../functions'
 
 function MobileNav({ view, setView, navOptions }) {
   const [navMenuOpen, setNavMenuOpen] = useState(false)
+  const node = useRef()
+
+  useEffect(() => {
+    document.addEventListener('click', (event) => handleOutsideNavClick(event, node, setNavMenuOpen))
+    return () => {
+      document.removeEventListener('click', (event) => handleOutsideNavClick(event, node, setNavMenuOpen))
+    }
+  }, [])
 
   return (
-    <nav data-testid="mobile-nav">
+    <nav data-testid="mobile-nav" ref={node}>
       <button data-testid="mobile-nav-button" onClick={() => setNavMenuOpen(!navMenuOpen)}>NAV</button>
       {navMenuOpen && 
         <ul data-testid="mobile-nav-list">
