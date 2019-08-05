@@ -9,3 +9,8 @@ export const handleNavClick = (screen, currentView, clickedView, setView) => {
     }
   }
 }
+
+export const handleMobileNavClick = (setNavMenuOpen, currentView, clickedView, setView) => {
+  setNavMenuOpen(false)
+  handleNavClick('mobile', currentView, clickedView, setView)
+}
