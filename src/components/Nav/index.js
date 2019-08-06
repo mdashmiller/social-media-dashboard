@@ -5,10 +5,10 @@ import MobileNav from './MobileNav/MobileNav'
 
 import { handleNavClick } from '../../functions'
 
-const Nav = ({ view, setView, screen, navOptions }) => {
+const Nav = ({ screen, view, setView, navOptions }) => {
   if (screen === 'mobile') {
     return (
-      <MobileNav view={view} setView={setView} screen={screen} navOptions={navOptions} />
+      <MobileNav view={view} setView={setView} navOptions={navOptions} />
     )
   } else {
     return (
@@ -32,9 +32,9 @@ const Nav = ({ view, setView, screen, navOptions }) => {
 }
 
 Nav.propTypes = {
+  screen: PropTypes.string.isRequired,
   view: PropTypes.string.isRequired,
   setView: PropTypes.func.isRequired,
-  screen: PropTypes.string.isRequired,
   navOptions: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     action: PropTypes.string.isRequired,

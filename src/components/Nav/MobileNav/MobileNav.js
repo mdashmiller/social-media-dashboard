@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { handleMobileNavClick, handleOutsideNavClick } from '../../../functions'
 
-function MobileNav({ view, setView, navOptions }) {
+const MobileNav = ({ view, setView, navOptions }) => {
   const [navMenuOpen, setNavMenuOpen] = useState(false)
   const node = useRef()
 

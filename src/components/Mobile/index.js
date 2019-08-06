@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import Nav from '../Nav'
+import Header from '../Header/Header'
 import Inbox from '../Inbox'
 import Notifications from '../Notifications'
 import Compose from '../Compose'
@@ -16,13 +16,12 @@ const Mobile = () => {
     { id: 2, action: 'view-notifications', label: 'notifications' },
     { id: 3, action: 'compose', label: 'new post' },
     { id: 4, action: 'view-news', label: 'news' },
-    { id: 5, action: 'view-weather', label: 'weather' },
-    { id: 6, action: 'edit-profile', label: 'edit profile' }
+    { id: 5, action: 'view-weather', label: 'weather' }
   ]
 
   return (
     <div data-testid="mobile">
-      <Nav view={view} setView={setView} screen={'mobile'} navOptions={navOptions} />
+      <Header screen={'mobile'} view={view} setView={setView} navOptions={navOptions} />
       <main data-testid="main">
         {view === 'inbox' && <Inbox />}
         {view === 'notifications' && <Notifications />}
