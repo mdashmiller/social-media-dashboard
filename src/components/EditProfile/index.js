@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { handleFormChange, handleFormSubmit } from '../../functions'
+import { handleFormChange, handleEditFormSubmit } from '../../functions'
 
 const EditProfile = () => {
   const [view, setView] = useState('landing')
@@ -29,7 +29,7 @@ const EditProfile = () => {
                 <input type="text" id={`new ${view}`} name={`${view}`} value={userInput} onChange={e => handleFormChange(e, setUserInput)} />
               </div>
               <div>
-                <button type="submit" onClick={e => handleFormSubmit(e, userInput, setUserInput)}>
+                <button type="submit" onClick={e => handleEditFormSubmit(e, userInput, setUserInput)}>
                   UPDATE
                 </button>
               </div>

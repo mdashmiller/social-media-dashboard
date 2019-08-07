@@ -27,7 +27,12 @@ export const handleFormChange = (event, callback) => {
   callback(event.target.value)
 }
 
-export const handleFormSubmit = (event, userInput, callback) => {
+export const handlePostFormSubmit = (event, title, message) => {
+  event.preventDefault()
+  console.log(title, message)
+}
+
+export const handleEditFormSubmit = (event, userInput, callback) => {
   event.preventDefault()
   console.log(userInput)
   callback('')
