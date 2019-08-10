@@ -8,7 +8,7 @@ const Compose = () => {
 
   return (
     <section>
-      <form>
+      <form onSubmit={e => handlePostFormSubmit(e, titleText, messageText)}>
         <h2>New Post</h2>
         <div>
           <label htmlFor="title">Title</label>
@@ -19,7 +19,7 @@ const Compose = () => {
           <input type="text" id="message" name="post-message" value={messageText} onChange={e => setMessageText(e.target.value)} />
         </div>
         <div>
-          <button type="submit" onClick={e => handlePostFormSubmit(e, titleText, messageText)}>
+          <button type="submit">
             POST
           </button>
         </div>

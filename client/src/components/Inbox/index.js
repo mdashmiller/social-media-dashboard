@@ -10,23 +10,23 @@ import PropTypes from 'prop-types'
 
 const Inbox = ({ posts }) => {
 
-  useEffect(() => {
-    getPosts()
-  }, [])
+  // useEffect(() => {
+  //   getPosts()
+  // }, [])
 
   return (
     <section data-testid="inbox">
       <h2>Inbox</h2>
-      {posts.length ? (
-        posts.map((post, i) =>
+      {/* {posts.length ? (
+        posts.map(post =>
           <Post 
-            key={post.uid} title={post.title} author={post.author} 
+            key={post.id} title={post.title} author={post.author} 
             time={post.time} content={post.content}
           />
         )
       ) : (
         <Loading />
-      )}
+      )} */}
     </section>
   )
 }
@@ -48,4 +48,5 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { getPosts })(Inbox) 
+// export default connect(mapStateToProps, { getPosts })(Inbox) 
+export default Inbox

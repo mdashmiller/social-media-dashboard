@@ -18,18 +18,18 @@ const EditProfile = () => {
       ) : (
         <>
           <button onClick={() => setView('landing')}>BACK</button>
-          <form>
+            <form onSubmit={e => handleEditFormSubmit(e, userInput, setUserInput)}>
               <h2>Edit {view}</h2>
               <div>
                 <label htmlFor={`current ${view}`}>current</label>
-                <input type="text" id={`current ${view}`} disabled={true} value={`user's current ${view}`} />
+                <input type="text" id={`current ${view}`} disabled value={`user's current ${view}`} />
               </div>
               <div>
                 <label htmlFor={`new ${view}`}>new</label>
                 <input type="text" id={`new ${view}`} name={`${view}`} value={userInput} onChange={e => handleFormChange(e, setUserInput)} />
               </div>
               <div>
-                <button type="submit" onClick={e => handleEditFormSubmit(e, userInput, setUserInput)}>
+                <button type="submit">
                   UPDATE
                 </button>
               </div>
