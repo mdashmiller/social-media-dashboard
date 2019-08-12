@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-const Post = ({ title, author, time, content }) => {
+const Post = ({ title, user, time, content }) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   return (
@@ -10,7 +10,7 @@ const Post = ({ title, author, time, content }) => {
       onClick={() => setIsExpanded(!isExpanded)}
     >
       <h3 data-testid="preview-title">{title}</h3>
-      <p data-testid="preview-author">{author}</p>
+      <p data-testid="preview-user">{user}</p>
       <p data-testid="preview-time">{time}</p>
       {isExpanded && 
         <p>{content}</p>
