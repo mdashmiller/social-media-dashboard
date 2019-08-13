@@ -1,35 +1,61 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import { handlePostFormSubmit } from '../../functions'
+import { useMutation } from '@apollo/react-hooks'
+import { GET_POSTS } from '../../queries/queries'
+import { ADD_POST } from '../../queries/queries'
 
 function Compose() {
-  const [titleText, setTitleText] = useState('')
-  const [messageText, setMessageText] = useState('')
+  let title
+  let message
+  const [
+    addPost,
+    { loading: mutationLoading, error: mutationError }
+  ] = useMutation(
+    ADD_POST,
+    {
+      update(cache, { data: { addPost } }) {
+        const { posts } = cache.readQuery({ query: GET_POSTS });
+        cache.writeQuery({
+          query: GET_POSTS,
+          data: { posts: posts.concat([addPost]) },
+        });
+      }
+    }
+  )
 
   return (
     <section>
-      <form onSubmit={e => handlePostFormSubmit(e, titleText, messageText)}>
+      <form onSubmit={e => {
+        e.preventDefault()
+        addPost({
+          variables: {
+            title: title.value,
+            message: message.value,
+            userId: "5d51a620686e4816d07eaafb"
+          }
+        })
+      }}>
         <h2>New Post</h2>
         <div>
           <label htmlFor="title">Title</label>
           <input
-            type="text" id="title" name="post-title"
-            value={titleText} onChange={e => setTitleText(e.target.value)}
+            type="text" id="title" ref={node => { title = node }}
           />
         </div>
         <div>
           <label htmlFor="message">Message</label>
           <input
-            type="text" id="message" name="post-message"
-            value={messageText} onChange={e => setMessageText(e.target.value)}
+            type="text" id="message" ref={node => { message = node }}
           />
         </div>
-        <div>
+        <div> 
           <button type="submit">
             POST
           </button>
         </div>
       </form>
+      {mutationLoading && <p>Loading...</p>}
+      {mutationError && <p>Error :( Please try again</p>}
     </section>
   )
 }
