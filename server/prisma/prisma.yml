@@ -1,4 +1,4 @@
-endpoint: ''
+endpoint: ${env:DB_URI}
 
 datamodel: datamodel.prisma
 

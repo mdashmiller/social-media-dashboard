@@ -1,4 +1,4 @@
-type Link {
+type Post {
   id: ID! @id
   createdAt: DateTime! @createdAt
   title: String!
